@@ -266,12 +266,12 @@ public class OsmandSettings {
 	public static final String ROUTER_SERVICE = "router_service"; //$NON-NLS-1$
 
 	public static RouteService getRouterService(SharedPreferences prefs) {
-		int ord = prefs.getInt(ROUTER_SERVICE, RouteService.OSMAND.ordinal());
+		int ord = prefs.getInt(ROUTER_SERVICE, RouteService.CLOUDMADE.ordinal());
 		// that fix specially for 0.5.2 release
-		if(ord < RouteService.values().length){
+		if(ord < 2){
 			return RouteService.values()[ord];
 		} else {
-			return RouteService.OSMAND;
+			return RouteService.CLOUDMADE;
 		}
 	}
 
