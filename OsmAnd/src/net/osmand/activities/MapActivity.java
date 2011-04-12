@@ -1007,6 +1007,7 @@ public class MapActivity extends Activity implements IMapLocationListener, Senso
 			if(resolved != null){
 				startActivity(intent);
 			} else {
+				// TODO install suggest to install?
 				Toast.makeText(this, getString(R.string.gps_status_app_not_found), Toast.LENGTH_LONG).show();
 			}
 			return true;

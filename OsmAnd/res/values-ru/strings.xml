@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<string name="osmand_plus_download">Установить</string>
+	<string name="osmand_plus_continue">Продолжить</string>
+	<string name="repackaging_osmand_long_message">Спасибо за использование OsmAnd. Это бесплатное open-source приложение для навигации. Потому как OsmAnd не получает никакой прибыли, достаточно тяжело предоставлять постоянные обновления приложения и данных. Мы верим, что OsmAnd должен быть свободным от рекламы и open-source. Пожалуйста, обратите внимание на текущую "donate" версию OsmAnd+ на Android Market. Вы всегда можете получить бесплатную версию с веб сайта.</string>
+	<string name="repackaging_osmand_short_message">Вы используете старую версию. Пожалуйста, обратите внимание на OsmAnd+.</string>
+	
 	<string name="voice_is_not_available_msg">Голосовая навигация не доступна. Перейдите в настройки и укажите голосовые данные или загрузите их.</string>
 	<string name="voice_is_not_available_title">Голосовые данные не найдены</string>
 	<string name="trace_rendering_descr">Используйте эту опцию для оценки производительности отрисовки</string>

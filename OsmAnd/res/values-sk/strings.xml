@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
+<string name="osmand_plus_download">Stiahnuť</string>
+<string name="osmand_plus_continue">Pokračovať</string>
+<string name="repackaging_osmand_long_message">Ďakujeme, že používate OsmAnd. Je to bezplatná open-source navigácia. Pretože OsmAnd nemá žiadny výnos, je dosť obtiažne uvoľňovať pravidelne aplikáciu a aktualizácie dát. Prosím, využite novšiu verziu OsmAnd+ z Android Marketu "a prispejte". Môžete získať bezplatnú kópiu z našej webstránky.</string>
+<string name="repackaging_osmand_short_message">Používate zastaralú verziu. Prosím, použite verziu OsmAnd+version</string>
 <string name="daynight_mode_day">Denný režim</string>
 <string name="daynight_mode_night">Nočný režim</string>
 <string name="daynight_mode_auto">Východ/západ slnka</string>

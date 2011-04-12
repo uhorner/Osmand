@@ -54,6 +54,7 @@ public class OsmandApplication extends Application {
     	manager = new ResourceManager(this);
     	daynightHelper = new DayNightHelper(this);
     	uiHandler = new Handler();
+    	
     	startApplication();
 	}
     

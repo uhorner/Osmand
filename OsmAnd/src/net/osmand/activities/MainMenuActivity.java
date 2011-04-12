@@ -10,6 +10,7 @@ import net.osmand.activities.search.SearchActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,10 +28,13 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainMenuActivity extends Activity {
 
 	private static final String FIRST_TIME_APP_RUN = "FIRST_TIME_APP_RUN"; //$NON-NLS-1$
+	private static final String REPACKAGING_OSMAND_PLUS = "REPACKAGING_OSMAND_PLUS"; //$NON-NLS-1$
+	private static final int REPACKAGING_REMINDER = 9;
 	private static final String EXCEPTION_FILE_SIZE = ResourceManager.APP_DIR + "exception.log"; //$NON-NLS-1$
 	
 	private View showMap;
@@ -168,6 +172,44 @@ public class MainMenuActivity extends Activity {
 		
 		SharedPreferences pref = getPreferences(MODE_WORLD_WRITEABLE);
 		if(!pref.contains(FIRST_TIME_APP_RUN)){
+			firstTimeRunningHelp(pref);
+		}
+		checkRepackaging(pref);
+	}
+	
+	private void checkRepackaging(SharedPreferences pref) {
+		// setting to -1 to not disturb with first time app
+		int i = pref.getInt(REPACKAGING_OSMAND_PLUS, -1);
+		if (i % REPACKAGING_REMINDER == 0) {
+			Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage(R.string.repackaging_osmand_long_message);
+			builder.setPositiveButton(R.string.osmand_plus_download, new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					Intent promptInstall = new Intent(Intent.ACTION_VIEW);
+					// promptInstall.setDataAndType(Uri.fromFile(f), "application/vnd.android.package-archive");
+					promptInstall.setData(Uri.parse("market://details?id=net.osmand.plus"));
+					try {
+						startActivity(promptInstall);
+					} catch(ActivityNotFoundException ex){
+						Toast.makeText(MainMenuActivity.this, R.string.repackaging_osmand_short_message, Toast.LENGTH_SHORT).show();
+					}
+				}
+
+			});
+			builder.setNegativeButton(R.string.osmand_plus_continue, null);
+			builder.show();
+
+		} else if ((i % (REPACKAGING_REMINDER / 3) == 0)) {
+			Toast.makeText(this, R.string.repackaging_osmand_short_message, Toast.LENGTH_SHORT).show();
+		}
+		
+		pref.edit().putInt(REPACKAGING_OSMAND_PLUS, i+1).commit();
+	}
+
+	private void firstTimeRunningHelp(SharedPreferences pref) {
+		
 			pref.edit().putBoolean(FIRST_TIME_APP_RUN, true).commit();
 			Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(R.string.first_time_msg);
@@ -182,7 +224,6 @@ public class MainMenuActivity extends Activity {
 			builder.setNegativeButton(R.string.first_time_continue, null);
 			
 			builder.show();
-		}
 	}
 	
 
