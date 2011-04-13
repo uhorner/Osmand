@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
 	<string name="osmand_plus_download">Install</string>
-	<string name="osmand_plus_continue">Continue</string>
-	<string name="repackaging_osmand_long_message">Thank you for using OsmAnd. It is free and open-source navigation application. Because OsmAnd doesn\'t get revenue, it is rather difficult to provide regular application and data updates. We believe that OsmAnd could be free from advertisment and open-source. Please consider current "donate" version OsmAnd+ on Android Market. You can always get free copy from our website.</string>
+	<string name="osmand_plus_continue">Not now</string>
+	<string name="repackaging_osmand_long_message">Thank you for using OsmAnd. It is free and open-source navigation application. Because OsmAnd doesn\'t get revenue, it is rather difficult to provide regular application and data updates. We believe that OsmAnd could be free from advertisment and open-source. Please consider "donate" version OsmAnd+ on Android Market. You can always get free copy from our website.</string>
 	<string name="repackaging_osmand_short_message">You are using old version. Please consider OsmAnd+ version.</string>
 	
 	<string name="voice_is_not_available_msg">Voice guidance is not available. Please go to settings, choose preferrable voice data or download it.</string>

@@ -34,7 +34,7 @@ public class MainMenuActivity extends Activity {
 
 	private static final String FIRST_TIME_APP_RUN = "FIRST_TIME_APP_RUN"; //$NON-NLS-1$
 	private static final String REPACKAGING_OSMAND_PLUS = "REPACKAGING_OSMAND_PLUS"; //$NON-NLS-1$
-	private static final int REPACKAGING_REMINDER = 9;
+	private static final int REPACKAGING_REMINDER = 6;
 	private static final String EXCEPTION_FILE_SIZE = ResourceManager.APP_DIR + "exception.log"; //$NON-NLS-1$
 	
 	private View showMap;
@@ -193,7 +193,7 @@ public class MainMenuActivity extends Activity {
 					try {
 						startActivity(promptInstall);
 					} catch(ActivityNotFoundException ex){
-						Toast.makeText(MainMenuActivity.this, R.string.repackaging_osmand_short_message, Toast.LENGTH_SHORT).show();
+						Toast.makeText(MainMenuActivity.this, R.string.repackaging_osmand_short_message, Toast.LENGTH_LONG).show();
 					}
 				}
 

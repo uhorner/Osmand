@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+	<string name="osmand_plus_download">Installeren</string>
+	<string name="osmand_plus_continue">Nee, nu niet</string>
+	<string name="repackaging_osmand_long_message">Bedankt voor de keuze voor Osmand. Osmand is nu al een prima gratis en open-source navigatie applicatie, bruikbaar voor de in de auto, maar ook voor fietsers en wandelaars. Omdat het open-source is, en gratis verkijgbaar via onze website, is het moeilijk om regelmatig met nieuwe functionaliteit en kaart updates te komen. We denken dat Osmand gratis en open-source kan blijven, en liefst zonder advertenties. Door Osmand te steunen en de PLUS versie via de Market aan te schaffen, doneer je mee, en maak je de ontwikkeling van nieuwe functionaliteit en uitbreidingen mogelijk. Zo kunnen meer mensen bijdragen aan verbeteringen. Daarvoor in de plaats krijg je regelmatig een nieuwe versie aangeboden via de Market, met nieuwe uitbreidingen en verbeteringen. Doe mee en zie Osmand steeds beter worden. Je kunt natuurlijk ook de gratis applicatie blijven gebruiken via onze website, maar de nieuwste updates wil je vast niet missen.</string>
+	<string name="repackaging_osmand_short_message">Je gebruikt nu de gratis versie. Steun Osmand door de PLUS versie versie aan te schaffen, en krijg altijd de nieuwste updates via de Market.</string>
+	
+</resources>

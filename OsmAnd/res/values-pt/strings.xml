@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+	<string name="osmand_plus_download">Instalar</string>
+	<string name="osmand_plus_continue">Cancelar</string>
+	<string name="repackaging_osmand_long_message">Obrigado por usar OsmAnd. Esta é uma aplicação gratuita e de código aberto para navegação. Como OsmAnd não gera nenhuma receita, é difícil fornecer atualizações regulares para a aplicação e dados. Acreditamos que OsmAnd deve ser mantido livre de anúncios e com seu código aberto. Por favor, considere a instalação da nova versão baseada em doações (OsmAnd+) disponível no Android Market. Caso não deseje fazer uma doação, você pode obter a aplicação gratuitamente a partir do nosso sítio web.</string>
+	<string name="repackaging_osmand_short_message">Você está usando uma versão antiga. Por favor, considere a instalação de OsmAnd+.</string>
+
+</resources>
