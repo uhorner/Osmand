@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<string name="osmand_plus_download">Download</string>
+	<string name="osmand_plus_continue">Weiter</string>
+	<string name="repackaging_osmand_long_message">Danke für die Benutzung von Osmand. Es ist eine freie Open-Source Navigationssoftware. Da Osmand keine Einnahmen erhält ist es eher schwierig, regelmäßige Software und Daten Updates bereitzustellen. Wir glauben dass Osmand frei von Werbung und Open-Source sein kann. Bitte erwägen Sie die Benutzung der neueren "Spenden" Version Osmand+ im Android Market. Eine kostenlose Version erhalten Sie auf unserer Website.</string>
+	<string name="repackaging_osmand_short_message">Sie benutzen die alte Version. Bitte erwägen Sie die Osmand+ Version.</string>
+	
 	<string name="osb_bug_name">OSM Fehler</string>
 	<string name="poi_context_menu_modify">Ändern POI</string>
 	<string name="poi_context_menu_delete">Löschen POI</string>

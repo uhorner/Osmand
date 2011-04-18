@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
+	<string name="osmand_plus_download">Télécharger</string>
+	<string name="osmand_plus_continue">Continuer</string>
+	<string name="repackaging_osmand_long_message">Merci d\'utiliser OsmAnd. C\'est un logiciel de navigation libre. Comme OsmAnd ne génère aucun revenu, il est parfois difficile de fournir des mises à jour des logiciels et des données de façon régulière. Nous estimons qu\'OsmAnd doit rester libre et sans publicité. Merci de considérer la nouvelle version \"Donation\" OsmAnd+ sur le Android Market. Vous pourrez toujours obtenir le logiciel gratuitement sur le site Web.</string>
+	<string name="repackaging_osmand_short_message">Si vous utilisez une ancienne version, merci de considérer une mise à jour vers OsmAnd+.</string>
+
 	<color name="color_red">#FF0000</color>
 	<color name="color_white">#FFFFFF</color>
 	<color name="menu_background">#FF9030</color>
