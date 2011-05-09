@@ -18,6 +18,7 @@ public class SearchStreetByNameActivity extends SearchByNameAbstractActivity<Str
 	private City city;
 	private PostCode postcode;
 	private OsmandSettings settings;
+	private String oldfilter = "";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
