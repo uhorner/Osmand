@@ -881,7 +881,7 @@ public class DownloadIndexActivity extends ListActivity {
 	private static TrialVersionActivityThread thread = new TrialVersionActivityThread();
 	private static final int INSTALL_BUILD = 2;
 	private static final int ACTIVITY_TO_INSTALL = 23;
-	private static final String trialOsmandPlus = "http://download.osmand.net/latest-night-build/OsmAnd-development.apk";
+	private static final String trialOsmandPlus = "http://download.osmand.net/latest-night-build/OsmAnd-trial.apk";
 	private static final int trialOsmandPlusSize = 3500; //in kbytes
 	
 	private void startThreadOperation(int operationId, String message, int total) {
