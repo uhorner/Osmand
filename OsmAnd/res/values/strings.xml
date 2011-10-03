@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
+	<string name="downloading_trial_version">Downloading trial Osmand+ version</string>
+	<string name="button_upgrade_osmandplustrial">Trial Osmand+</string>
+	<string name="button_upgrade_osmandplus">Upgrade Osmand+</string>
+	<string name="map_version_changed_info">On server are map files incompatible with your current version of application. To download and use them, please upgrade the application to trial OsmAnd+ version or OsmaAnd+ donation version on market. (Backup yours favorites before)</string>
+
 	<string name="osmand_plus_download">Install</string>
 	<string name="osmand_plus_continue">Not now</string>
 	<string name="repackaging_osmand_long_message">Thank you for using OsmAnd. It is free and open-source navigation application. Because OsmAnd doesn\'t get revenue, it is rather difficult to provide regular application and data updates. We believe that OsmAnd could be free from advertisment and open-source. Please consider "donate" version OsmAnd+ on Android Market. You can always get free copy from our website.</string>

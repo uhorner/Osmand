@@ -1,7 +1,6 @@
 package net.osmand.activities;
 
 import static net.osmand.data.index.IndexConstants.ADDRESS_INDEX_EXT;
-import static net.osmand.DownloadOsmandIndexesHelper.IndexItem;
 import static net.osmand.data.index.IndexConstants.ADDRESS_INDEX_EXT_ZIP;
 import static net.osmand.data.index.IndexConstants.ADDRESS_TABLE_VERSION;
 import static net.osmand.data.index.IndexConstants.BINARY_MAP_INDEX_EXT;
@@ -24,42 +23,43 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.Map.Entry;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import net.osmand.DownloadOsmandIndexesHelper;
+import net.osmand.DownloadOsmandIndexesHelper.IndexItem;
 import net.osmand.IProgress;
+import net.osmand.IndexFileList;
 import net.osmand.LogUtil;
 import net.osmand.ProgressDialogImplementation;
 import net.osmand.R;
 import net.osmand.ResourceManager;
-import net.osmand.data.index.DownloaderIndexFromGoogleCode;
 import net.osmand.data.index.IndexConstants;
 
 import org.apache.commons.logging.Log;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
 
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
-import android.app.AlertDialog.Builder;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.Editable;
@@ -85,6 +85,8 @@ public class DownloadIndexActivity extends ListActivity {
 	private static final int SELECT_ALL_ID = 1;
 	private static final int DESELECT_ALL_ID = 2;
 	private static final int FILTER_EXISTING_REGIONS = 3;
+	/** dialog constants */
+	protected static final int DIALOG_MAP_VERSION_UPDATE = 0;
 	
 	private static DownloadIndexListThread downloadListIndexThread = new DownloadIndexListThread();
 
@@ -136,6 +138,39 @@ public class DownloadIndexActivity extends ListActivity {
 		} else {
 			downloadIndexList();
 		}
+	}
+
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+			case DIALOG_MAP_VERSION_UPDATE:
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				builder.setMessage(R.string.map_version_changed_info);
+				builder.setNeutralButton(R.string.button_upgrade_osmandplustrial, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						startThreadOperation(INSTALL_BUILD, getString(R.string.downloading_trial_version), trialOsmandPlusSize);
+					}
+				});
+				builder.setPositiveButton(R.string.button_upgrade_osmandplus, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pname:net.osmand.plus"));
+						try {
+							startActivity(intent);
+						} catch (ActivityNotFoundException e) {
+						}
+					}
+				});
+				builder.setNegativeButton(R.string.default_buttons_cancel, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						removeDialog(DIALOG_MAP_VERSION_UPDATE); 
+					}
+				});
+				return builder.create();
+		}
+		return null;
 	}
 
 	private void downloadIndexList() {
@@ -215,7 +250,7 @@ public class DownloadIndexActivity extends ListActivity {
 	
 	private static class DownloadIndexListThread extends Thread {
 		private DownloadIndexActivity uiActivity = null;
-		private Map<String, IndexItem> indexFiles = null; 
+		private IndexFileList indexFiles = null; 
 		
 		public DownloadIndexListThread(){
 			super("DownloadIndexes"); //$NON-NLS-1$
@@ -225,7 +260,7 @@ public class DownloadIndexActivity extends ListActivity {
 		}
 		
 		public Map<String, IndexItem> getCachedIndexFiles() {
-			return indexFiles;
+			return indexFiles != null ? indexFiles.getIndexFiles() : null;
 		}
 		
 		@Override
@@ -238,7 +273,10 @@ public class DownloadIndexActivity extends ListActivity {
 					@Override
 					public void run() {
 						if (indexFiles != null) {
-							uiActivity.setListAdapter(uiActivity.new DownloadIndexAdapter(indexFiles));
+							uiActivity.setListAdapter(uiActivity.new DownloadIndexAdapter(indexFiles.getIndexFiles()));
+							if (indexFiles.isIncreasedMapVersion()) {
+								uiActivity.showDialog(DownloadIndexActivity.DIALOG_MAP_VERSION_UPDATE);
+							}
 						} else {
 							Toast.makeText(uiActivity, R.string.list_index_files_was_not_loaded, Toast.LENGTH_LONG).show();
 						}
@@ -247,11 +285,6 @@ public class DownloadIndexActivity extends ListActivity {
 			}
 		}
 	}
-	
-	
-	
-
-	
 	
 	private final static int MB = 1 << 20;
 
@@ -839,5 +872,119 @@ public class DownloadIndexActivity extends ListActivity {
 		}
 	}
 	
+	
+    /** to install trial version */
+	private File pathToDownload = new File(
+			Environment.getExternalStorageDirectory(), ResourceManager.APP_DIR
+					+ "osmandToInstall.apk");
+	ProgressDialog progressDlg;
+	private static TrialVersionActivityThread thread = new TrialVersionActivityThread();
+	private static final int INSTALL_BUILD = 2;
+	private static final int ACTIVITY_TO_INSTALL = 23;
+	private static final String trialOsmandPlus = "http://download.osmand.net/latest-night-build/OsmAnd-development.apk";
+	private static final int trialOsmandPlusSize = 3500; //in kbytes
+	
+	private void startThreadOperation(int operationId, String message, int total) {
 
+		progressDlg = new ProgressDialog(this);
+		progressDlg.setTitle(getString(R.string.loading));
+		progressDlg.setMessage(message);
+		if (total != -1) {
+			progressDlg.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+			progressDlg.setMax(total);
+			progressDlg.setProgress(0);
+		} else {
+			progressDlg.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		}
+		progressDlg.show();
+		// progressFileDlg.setCancelable(false);
+		if (thread.getState() == Thread.State.TERMINATED
+				|| thread.getOperationId() != operationId) {
+			thread = new TrialVersionActivityThread();
+			thread.setOperationId(operationId);
+		}
+		thread.setActivity(this);
+		if (thread.getState() == Thread.State.NEW) {
+			thread.start();
+		}
+	}
+
+	protected void endThreadOperation(int operationId, Exception e) {
+		if (progressDlg != null) {
+			progressDlg.dismiss();
+			progressDlg = null;
+		}
+		if (operationId == INSTALL_BUILD) {
+			Intent intent = new Intent(Intent.ACTION_VIEW);
+			intent.setDataAndType(Uri.fromFile(pathToDownload),
+					"application/vnd.android.package-archive");
+			startActivityForResult(intent, ACTIVITY_TO_INSTALL);
+		}
+	}
+    
+	protected void executeThreadOperation(int operationId) throws Exception {
+		if (operationId == INSTALL_BUILD) {
+			URLConnection connection = new URL(trialOsmandPlus).openConnection();
+			if (pathToDownload.exists()) {
+				pathToDownload.delete();
+			}
+			byte[] buffer = new byte[1024];
+			InputStream is = connection.getInputStream();
+			FileOutputStream fout = new FileOutputStream(pathToDownload);
+			try {
+				int totalRead = 0;
+				int read;
+				while ((read = is.read(buffer, 0, 1024)) != -1) {
+					fout.write(buffer, 0, read);
+					totalRead += read;
+					if (totalRead > 1024) {
+						progressDlg.incrementProgressBy(totalRead / 1024);
+						totalRead %= 1024;
+					}
+				}
+			} finally {
+				fout.close();
+				is.close();
+			}
+		}
+
+	}
+
+	private static class TrialVersionActivityThread extends Thread {
+		private DownloadIndexActivity activity;
+		private int operationId;
+
+		public void setActivity(DownloadIndexActivity activity) {
+			this.activity = activity;
+		}
+
+		public int getOperationId() {
+			return operationId;
+		}
+
+		public void setOperationId(int operationId) {
+			this.operationId = operationId;
+		}
+
+		@Override
+		public void run() {
+			Exception ex = null;
+			try {
+				if (this.activity != null) {
+					this.activity.executeThreadOperation(operationId);
+				}
+			} catch (Exception e) {
+				ex = e;
+			}
+			final Exception e = ex;
+			if (this.activity != null) {
+				this.activity.runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						activity.endThreadOperation(operationId, e);
+					}
+				});
+			}
+		}
+	}
 }
