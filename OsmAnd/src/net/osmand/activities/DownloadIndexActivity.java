@@ -46,6 +46,7 @@ import net.osmand.LogUtil;
 import net.osmand.ProgressDialogImplementation;
 import net.osmand.R;
 import net.osmand.ResourceManager;
+import net.osmand.Version;
 import net.osmand.data.index.IndexConstants;
 
 import org.apache.commons.logging.Log;
@@ -638,11 +639,11 @@ public class DownloadIndexActivity extends ListActivity {
 			
 			try {
 				if(parts == 1){
-					URL url = new URL("http://download.osmand.net/download?file="+key);  //$NON-NLS-1$
+					URL url = new URL("http://download.osmand.net/download?file="+key + "&" + Version.getVersionAsURLParam());  //$NON-NLS-1$
 					downloadFile(key, out, url, null, progress);
 				} else {
 					for(int i=1; i<=parts; i++){
-						URL url = new URL("http://download.osmand.net/download?file="+key+"-"+i);  //$NON-NLS-1$
+						URL url = new URL("http://download.osmand.net/download?file="+key+"-"+i + "&" + Version.getVersionAsURLParam());  //$NON-NLS-1$
 						downloadFile(key, out, url, " ["+i+"/"+parts+"]", progress);
 					}
 				}
